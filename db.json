@@ -1,0 +1,64 @@
+{
+  "projects": [
+    {
+      "name": "teste",
+      "budget": "200",
+      "category": {
+        "id": "1",
+        "name": "infra"
+      },
+      "cost": 0,
+      "services": [],
+      "id": 1
+    },
+    {
+      "cost": 0,
+      "services": [],
+      "id": 2
+    },
+    {
+      "name": "teste message",
+      "budget": "1500",
+      "category": {
+        "id": "2",
+        "name": "Development"
+      },
+      "cost": 0,
+      "services": [],
+      "id": 3
+    },
+    {
+      "cost": 0,
+      "services": [],
+      "id": 4
+    },
+    {
+      "cost": 0,
+      "services": [],
+      "id": 5
+    },
+    {
+      "cost": 0,
+      "services": [],
+      "id": 6
+    }
+  ],
+  "categories": [
+    {
+      "id": 1,
+      "name": "infra"
+    },
+    {
+      "id": 2,
+      "name": "Development"
+    },
+    {
+      "id": 3,
+      "name": "Design"
+    },
+    {
+      "id": 4,
+      "name": "Planning"
+    }
+  ]
+}
