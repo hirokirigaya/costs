@@ -1,15 +1,15 @@
 {
   "projects": [
     {
-      "name": "developers",
+      "name": "web site",
       "budget": "2000",
       "category": {
-        "id": "2",
-        "name": "Development"
+        "id": "3",
+        "name": "Design"
       },
       "cost": 0,
       "services": [],
-      "id": 3
+      "id": 1
     }
   ],
   "categories": [

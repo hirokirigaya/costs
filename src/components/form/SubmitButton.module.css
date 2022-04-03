@@ -1,3 +1,10 @@
+.boxButton {
+  display: flex;
+  justify-content: center;
+  width: 340px;
+  margin: 0 auto;
+}
+
 .btn {
   background-color: #222;
   color: #e6e6e6;
@@ -6,6 +13,9 @@
   transition: 200ms ease-in-out;
   cursor: pointer;
   border: none;
+  border-radius: 4px;
+  text-align: center;
+  width: 100%;
 }
 
 .btn:hover {

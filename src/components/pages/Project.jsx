@@ -1,27 +1,23 @@
-import { useLocation } from "react-router-dom";
-import { useState, useEffect } from "react";
-import Message from "../layout/Message";
-import Container from "../layout/Container";
-import Loading from "../layout/Loading";
-import LinkButton from "../layout/LinkButton";
-
-import ProjectCard from "../project/ProjectCard";
-
 import styles from "./Project.module.css";
 
-function Project() {
-  const [projects, setProjects] = useState([]);
-  const [removeLoading, setRemoveLoading] = useState(true);
-  const [projectMessage, setProjectMessage] = useState('')
+import { useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
+import Loading from "../layout/Loading";
+import Container from "../layout/Container";
 
-  const location = useLocation();
-  let message = "";
-  if (location.state) {
-    message = location.state.message;
-  }
+import Message from '../layout/Message';
+
+import ProjectForm from "../project/ProjectForm";
+
+function Project() {
+  const { id } = useParams();
+  const [project, setProject] = useState([]);
+  const [showProjectForm, setShowProjectForm] = useState(false);
+  const [message, setMessage] = useState();
+  const [type, setType] = useState();
 
   useEffect(() => {
-    fetch("http://localhost:5000/projects", {
+    fetch(`http://localhost:5000/projects/${id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -29,53 +25,78 @@ function Project() {
     })
       .then((resp) => resp.json())
       .then((data) => {
-        setProjects(data);
-        setRemoveLoading(false);
+        setProject(data);
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [id]);
 
-  function removeProject(id) {
-    fetch(`http://localhost:5000/projects/${id}`, {
-      method: "DELETE",
+  function editPost(project) {
+    if (project.budget < project.cost) {
+      setMessage('The budget cannot be less than the cost of the project')
+      setType('error')
+      return false
+    }
+
+    fetch(`http://localhost:5000/projects/${project.id}`, {
+      method: "PATCH",
       headers: {
         "Content-Type": "application/json",
       },
+      body: JSON.stringify(project),
     })
       .then((resp) => resp.json())
-      .then(() => {
-        setProjects(projects.filter((project) => project.id !== id))
-        setProjectMessage('Project removed with success')
+      .then((data) => {
+          setProject(data)
+          setShowProjectForm(false)
+          setMessage('The project has changed with success')
+          setType('success')
       })
       .catch((err) => console.log(err));
   }
 
+  function toggleProjectForm() {
+    setShowProjectForm(!showProjectForm);
+  }
+
   return (
-    <div className={styles.projectContainer}>
-      <div className={styles.titleContainer}>
-        <h1>My Projects</h1>
-        <LinkButton to="/newproject" text="New Project" />
-      </div>
-      {message && <Message type="success" msg={message} />}
-      {projectMessage && <Message type="success" msg={projectMessage} />}
-      <Container customClass="start">
-        {projects.length > 0 &&
-          projects.map((project) => (
-            <ProjectCard
-              id={project.id}
-              name={project.name}
-              budget={project.budget}
-              category={project.category.name}
-              key={project.id}
-              handleRemove={removeProject}
-            />
-          ))}
-        {removeLoading && <Loading />}
-        {removeLoading && projects.length === 0 && (
-          <p>Dont have projects registred</p>
-        )}
-      </Container>
-    </div>
+    <>
+      {project.name ? (
+        <div className={styles.projectDetails}>
+          <Container customClass="column">
+              {message && <Message type={type} msg={message}/>}
+            <div className={styles.detailsContainer}>
+              <h1>Project: {project.name}</h1>
+              <button onClick={toggleProjectForm} className={styles.btn}>
+                {!showProjectForm ? "Edit Project" : "Close"}
+              </button>
+              {!showProjectForm ? (
+                <div className={styles.projectInfo}>
+                  <p>
+                    <span>Category:</span> {project.category.name}
+                  </p>
+                  <p>
+                    <span>Budget:</span> ${project.budget}
+                  </p>
+                  <p>
+                    <span>Total used:</span> ${project.cost}
+                  </p>
+                </div>
+              ) : (
+                <div className={styles.projectInfo}>
+                  <ProjectForm
+                    handleSubmit={editPost}
+                    btnText="Save changes"
+                    projectData={project}
+                  />
+                </div>
+              )}
+            </div>
+          </Container>
+        </div>
+      ) : (
+        <Loading />
+      )}
+    </>
   );
 }
 
