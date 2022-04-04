@@ -2,13 +2,26 @@
   "projects": [
     {
       "name": "web site",
-      "budget": "2000",
+      "budget": "200",
       "category": {
         "id": "3",
         "name": "Design"
       },
-      "cost": 0,
-      "services": [],
+      "cost": 200,
+      "services": [
+        {
+          "name": "test",
+          "cost": "9",
+          "description": "asdasdasd",
+          "id": "b66dc7aa-d778-4ba7-9334-a8312e7bfa9d"
+        },
+        {
+          "cost": "191",
+          "name": "second service",
+          "description": "test",
+          "id": "0916f411-cfdb-467e-b1d5-93aabb715fb9"
+        }
+      ],
       "id": 1
     }
   ],
