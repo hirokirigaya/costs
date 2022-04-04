@@ -1,27 +1,14 @@
 {
   "projects": [
     {
-      "name": "web site",
+      "name": "test",
       "budget": "200",
       "category": {
-        "id": "3",
-        "name": "Design"
+        "id": "2",
+        "name": "Development"
       },
-      "cost": 200,
-      "services": [
-        {
-          "name": "test",
-          "cost": "9",
-          "description": "asdasdasd",
-          "id": "b66dc7aa-d778-4ba7-9334-a8312e7bfa9d"
-        },
-        {
-          "cost": "191",
-          "name": "second service",
-          "description": "test",
-          "id": "0916f411-cfdb-467e-b1d5-93aabb715fb9"
-        }
-      ],
+      "cost": 0,
+      "services": [],
       "id": 1
     }
   ],
